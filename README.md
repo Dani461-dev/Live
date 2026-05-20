@@ -1,58 +1,305 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ⚽ LiveScore — Data Engine Service
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Backend Data Engine untuk aplikasi **Football Live Score & Match Statistics** berbasis **Laravel Monolith**.
 
-## About Laravel
+Service ini bertanggung jawab untuk:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+* mengambil data dari API-Football
+* memproses dan menormalisasi data
+* menyimpan data ke database
+* memperbarui data pertandingan secara berkala
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Project ini difokuskan pada implementasi:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* backend data pipeline
+* scheduled data fetching
+* live match synchronization
+* cloud database integration
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# 🚀 Tech Stack
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Backend
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+* Laravel
+* PHP 8.4+
 
-## Agentic Development
+## Database
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+* PostgreSQL (Supabase)
 
-```bash
-composer require laravel/boost --dev
+## External API
 
-php artisan boost:install
+* API-Football
+
+## Real-Time Strategy
+
+* Laravel Scheduler
+* Polling System
+
+---
+
+# 🧠 Data Engine Architecture
+
+```text id="o9i0b0"
+API-Football
+      ↓
+Laravel Service
+      ↓
+Data Normalization
+      ↓
+PostgreSQL (Supabase)
+      ↓
+Controller / API Layer
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+---
 
-## Contributing
+# 🎯 Main Responsibilities
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## ✅ API Integration
 
-## Code of Conduct
+Menghubungkan backend dengan API-Football.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## ✅ Data Fetching
 
-## Security Vulnerabilities
+Mengambil:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* live matches
+* today matches
+* match statistics
 
-## License
+## ✅ Data Normalization
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Mengubah struktur raw API menjadi format internal aplikasi.
+
+## ✅ Database Management
+
+Menyimpan:
+
+* teams
+* fixtures
+* match statistics
+
+## ✅ Scheduler System
+
+Menjalankan update data otomatis tiap 1 menit.
+
+---
+
+# 📁 Project Structure
+
+```text id="8s44oq"
+app/
+├── Console/
+│   └── Commands/
+├── Models/
+├── Services/
+
+database/
+├── migrations/
+├── seeders/
+```
+
+---
+
+# ⚙️ Setup Project
+
+## 1. Clone Repository
+
+```bash id="1o98nl"
+git clone https://github.com/USERNAME/LiveScore.git
+cd LiveScore
+```
+
+---
+
+## 2. Install Dependency
+
+```bash id="mjlwmq"
+composer install
+```
+
+---
+
+## 3. Copy Environment
+
+```bash id="nnhq0n"
+cp .env.example .env
+```
+
+---
+
+## 4. Generate App Key
+
+```bash id="0ch02s"
+php artisan key:generate
+```
+
+---
+
+# 🗄️ Database Configuration
+
+Menggunakan PostgreSQL dari Supabase.
+
+Isi `.env`
+
+```env id="6lb6fe"
+DB_CONNECTION=pgsql
+DB_HOST=YOUR_SUPABASE_HOST
+DB_PORT=5432
+DB_DATABASE=postgres
+DB_USERNAME=postgres
+DB_PASSWORD=YOUR_PASSWORD
+DB_SSLMODE=require
+```
+
+---
+
+# 🔑 API Configuration
+
+Tambahkan API-Football key di `.env`
+
+```env id="rj8d5u"
+API_FOOTBALL_KEY=YOUR_API_KEY
+API_FOOTBALL_BASE_URL=https://v3.football.api-sports.io
+```
+
+---
+
+# 🧱 Database Schema
+
+## teams
+
+Menyimpan data tim sepak bola.
+
+## fixtures
+
+Menyimpan data pertandingan.
+
+## match_stats
+
+Menyimpan statistik pertandingan.
+
+---
+
+# ▶️ Migration
+
+Menjalankan migration database:
+
+```bash id="ubm5yb"
+php artisan migrate
+```
+
+---
+
+# 🔄 Scheduler System
+
+Scheduler digunakan untuk:
+
+* fetch live score otomatis
+* update pertandingan
+* sinkronisasi data
+
+Menjalankan scheduler:
+
+```bash id="p7h2yi"
+php artisan schedule:work
+```
+
+---
+
+# ⚡ Fetch Live Match
+
+Command digunakan untuk mengambil pertandingan live dari API-Football dan menyimpannya ke database.
+
+Contoh command:
+
+```bash id="7v7xx1"
+php artisan fetch:livescore
+```
+
+---
+
+# 📡 Data Flow
+
+```text id="7o1i0t"
+API-Football
+    ↓
+Laravel Command
+    ↓
+Service Layer
+    ↓
+Data Processing
+    ↓
+PostgreSQL
+```
+
+---
+
+# 📌 Features
+
+## ✅ Live Match Fetching
+
+Mengambil data pertandingan live.
+
+## ✅ Match Statistics Fetching
+
+Mengambil statistik pertandingan.
+
+## ✅ Automatic Update
+
+Update data otomatis menggunakan scheduler.
+
+## ✅ Database Synchronization
+
+Sinkronisasi data pertandingan ke database.
+
+---
+
+# 🎯 Development Goals
+
+* Membangun backend data pipeline
+* Implementasi scheduled data processing
+* Integrasi cloud database
+* Sinkronisasi data pertandingan secara otomatis
+* Menjaga struktur backend tetap sederhana dan stabil
+
+---
+
+# ⚠️ Development Notes
+
+Project ini menggunakan arsitektur sederhana:
+
+* tanpa Redis
+* tanpa WebSocket
+* tanpa microservice
+
+Tujuannya:
+
+* mempermudah development
+* fokus pada backend data flow
+* menjaga stabilitas project untuk tim kecil
+
+---
+
+# 👨‍💻 Role
+
+## Data Engine Developer
+
+Tanggung jawab:
+
+* API integration
+* data fetching
+* database synchronization
+* scheduler system
+* data normalization
+
+Framework pembagian tugas backend disusun agar sinkronisasi kerja tim tetap terjaga. 
+
+---
+
+# 📄 License
+
+MIT License
